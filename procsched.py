@@ -307,8 +307,8 @@ def calc_result(rt: list, tt: list):
     '''
     count = len(rt)
     res = {
-        'avg_turna_time' : float(sum(tt) / count),
-        'avg_resp_rate' : sum(float(tt[i]/rt[i]) for i in range(count)) / count,
+        'avg_turna_time' : sum(tt) / count,
+        'avg_resp_rate' : sum(tt[i]/rt[i] for i in range(count)) / count,
         'max_wait_time' : max(tt[i] - rt[i] for i in range(count)),
     }
     lg.info('result = ' + res.__str__())

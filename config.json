@@ -7,7 +7,7 @@
     },
     "algo" : {
         "slice_size" : 10,
-        "list_level" : 4
+        "queue_level" : 4
     },
     "sample_size" : 50
 }

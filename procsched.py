@@ -226,7 +226,7 @@ def RR(at: list, rt: list, ss: int):
     return turna_time
 
 
-def MLRL(at: list, rt: list, ss: int, ll: int):
+def MLFQ(at: list, rt: list, ss: int, ql: int):
     '''
     多级反馈队列算法
 
@@ -235,18 +235,18 @@ def MLRL(at: list, rt: list, ss: int, ll: int):
     + at: list 进程到达时间列表
     + rt: list 进程运行时间列表
     + ss: int 第0级时间片大小
-    + ll: int 进程队列级数
+    + ql: int 进程队列级数
 
     Returns
     -------
     + turna_time: list 进程周转时间列表
     '''
     clock = 0
-    proc_lists = [[] for _ in range(ll)]
+    proc_lists = [[] for _ in range(ql)]
     remain_time = rt[:]
     count = len(at)
     turna_time = [0] * count
-    time_slice = [0] * ll
+    time_slice = [0] * ql
 
     not_empty = lambda ls : bool([True for e in ls if e])
     
@@ -276,7 +276,7 @@ def MLRL(at: list, rt: list, ss: int, ll: int):
                     turna_time[cur_proc] = clock - at[cur_proc]
                     lg.debug('porc{i}_term_time = {c}'.format(i=proc_lists[lvl].pop(0), c=clock))
                 else:
-                    if lvl < ll - 1:
+                    if lvl < ql - 1:
                         proc_lists[lvl+1].append(proc_lists[lvl].pop(0))
                     else:
                         proc_lists[lvl].append(proc_lists[lvl].pop(0))
@@ -383,7 +383,7 @@ def main():
     lg.basicConfig(level=lg.WARNING)
 
     config = load_config()
-    algos = ['FCFS', 'SRTN', 'HRRF', 'RR', 'MLRL']
+    algos = ['FCFS', 'SRTN', 'HRRF', 'RR', 'MLFQ']
     results = {a : [] for a in algos}
    
     for _ in range(config['sample_size']):
@@ -394,7 +394,7 @@ def main():
         turna_times['SRTN'] = SRTN(arri_time, run_time)
         turna_times['HRRF'] = HRRF(arri_time, run_time)
         turna_times['RR'] = RR(arri_time, run_time, config['algo']['slice_size'])
-        turna_times['MLRL'] = MLRL(arri_time, run_time, config['algo']['slice_size'], config['algo']['list_level'])
+        turna_times['MLFQ'] = MLFQ(arri_time, run_time, config['algo']['slice_size'], config['algo']['queue_level'])
 
         for a in algos:
             results[a].append(calc_result(run_time, turna_times[a]))

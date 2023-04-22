@@ -109,7 +109,7 @@ def SRTN(at: list, rt: list):
                 break
         if not insed:
             act_proc.append(i)
-            
+
         lg.debug('porc{i}_start_time = {c}'.format(i=i, c=clock))
         lg.debug('act_proc = ' + act_proc.__str__())
         lg.debug('act_proc_remain_time = {t}'.format(t=[remain_time[p] for p in act_proc]))
@@ -356,6 +356,10 @@ def draw_chart(res: dict, rt1: float, rt2: float):
         'max_wait_time' : np.array([r['max_wait_time'] for r in res.values()])
     }
 
+    plt.figure(figsize=(8, 5), dpi=120)
+    # plt.axes([0.05, 0.05, 0.9, 0.9])
+    plt.margins(y=0.3)
+
     plt.bar(xs + 0.00, data['avg_turna_time'], 0.25, label = 'avg_turna_time')
     plt.bar(xs + 0.25, data['avg_resp_rate'] * rt1, 0.25, label = 'avg_resp_rate')
     plt.bar(xs + 0.50, data['max_wait_time'] * rt2, 0.25, label = 'max_wait_time')
@@ -368,7 +372,6 @@ def draw_chart(res: dict, rt1: float, rt2: float):
     plt.title('performence of process dispatch algorithm')
     plt.xticks(xs + 0.25, names)
     plt.legend(loc='upper right')
-    plt.get_current_fig_manager().resize(800, 500)
     plt.show()
 
 

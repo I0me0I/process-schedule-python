@@ -1,13 +1,13 @@
 {
     "proc" : {
-        "avg_runtime" : 30,
-        "diff_runtime" : 15,
+        "avg_runtime" : 60,
+        "diff_runtime" : 30,
         "count" : 20,
-        "latest_arri" : 600
+        "latest_arri" : 1000
     },
     "algo" : {
         "slice_size" : 10,
-        "list_level" : 3
+        "list_level" : 4
     },
     "sample_size" : 50
 }

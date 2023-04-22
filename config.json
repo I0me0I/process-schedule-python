@@ -1,0 +1,13 @@
+{
+    "proc" : {
+        "avg_runtime" : 30,
+        "diff_runtime" : 15,
+        "count" : 20,
+        "latest_arri" : 600
+    },
+    "algo" : {
+        "slice_size" : 10,
+        "list_level" : 3
+    },
+    "sample_size" : 50
+}

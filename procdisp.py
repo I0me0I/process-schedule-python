@@ -70,9 +70,11 @@ def FCFS(at: list, rt: list):
 
     for i in range(count):
         lg.debug('proc{i}_start_time: {c}'.format(i=i, c=clock))
+        
         clock += rt[i]
         turna_time.append(clock - at[i])
         lg.debug('proc{i}_term_time: {c}'.format(i=i, c=clock))
+
         if i < count - 1 and clock < at[i+1]:
             clock = at[i+1]
 
@@ -104,8 +106,10 @@ def SRTN(at: list, rt: list):
             if remain_time[i] < remain_time[act_proc[j]]:
                 act_proc.insert(j, i)
                 insed = True
+                break
         if not insed:
             act_proc.append(i)
+            
         lg.debug('porc{i}_start_time = {c}'.format(i=i, c=clock))
         lg.debug('act_proc = ' + act_proc.__str__())
         lg.debug('act_proc_remain_time = {t}'.format(t=[remain_time[p] for p in act_proc]))

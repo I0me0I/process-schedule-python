@@ -17,6 +17,7 @@
 * Python 3.10.2
 * VSCode 1.77.3
 * matplotlib 3.7.1 (Python 模块)
+* numpy 1.24.2 (Python 模块)
 
 ### 程序说明
 - - - - - - - - - - - -
@@ -81,7 +82,14 @@
 第1个进程到达时间为0，最后一个进程的到达时间为 `latest_arri`，其余进程的到达时间为 `[0, latest_arri]` 的均匀分布  
 进程运行时间为 `μ=avg_runtime`，`σ=diff_tuntime` 的正态分布。由于运行时间必须是正数，生成的随机数为负或0时将重新生成，所以实际的平均运行时间往往略大于`avg_runtime`
 
+#### 图表的绘制
 
+绘制图表使用的是 matplotlib 模块，并用到了 numpy 模块。这两个模块可以使用 pip 进行安装：
+
+```shell
+pip install matplotlib
+pip install numpy
+```
 
 ### 算法实现
 - - - - - - - - - - - -

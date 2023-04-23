@@ -87,7 +87,7 @@
 
 算法的执行步骤如下：
 1. 运行 进程[i] 直至结束，计算周转时间
-2. 如果 进程[i] 不是最后一个进程，且 当前时间 < 进程[i+1]的到达时间，
+2. 如果 进程[i] 不是最后一个进程，且 当前时间 < 进程[i+1]的到达时间，  
 则 处理器空闲，等待 进程[i+1] 到达
 3. 对 `i=0...count-1` 重复步骤 1.2.
 
@@ -105,14 +105,14 @@
 
 算法的执行步骤如下：
 1. 将 进程[i] 按 剩余时间 升序插入 活动进程列表
-2. 如果 进程[i] 是最后一个进程，跳过步骤 3.4.
-3. 当 活动进程列表 不为空，且 当前时间 + 活动进程[0]的剩余时间 <= 进程[i+1]的到达时间，
+2. 如果 进程[i] 是最后一个进程，跳到步骤 5.
+3. 当 活动进程列表 不为空，且 当前时间 + 活动进程[0]的剩余时间 <= 进程[i+1]的到达时间，  
 则 运行 活动进程[0] 直至结束，从 活动进程列表 删除 活动进程[0]
-4. 如果 活动进程列表 不为空，
-则 运行 活动进程[0] 直至 进程[i+1] 到达
+4. 如果 活动进程列表 不为空，  
+则 运行 活动进程[0] 直至 进程[i+1] 到达，  
 否则 处理器空闲，等待 进程[i+1] 到达
 5. 对 `i=0...count-1` 重复步骤 1.2.3.4.
-6. 对于 活动进程列表 中的每一个 进程， 
+6. 对于 活动进程列表 中的每一个 进程，   
 运行 进程 直至结束
 
 相关代码：
@@ -147,15 +147,15 @@
 
 算法的执行步骤如下：
 1. 将 进程[i] 插入 活动进程列表，对 活动进程列表 按 响应比 降序排序
-2. 如果 进程[i] 是最后一个进程，跳过步骤 3.4.
-3. 当 活动进程列表 不为空，且 当前时间 + 活动进程[0]的剩余时间 <= 进程[i+1]的到达时间，
-则 运行 活动进程[0] 直至结束，从 活动进程列表 删除 活动进程[0]，
+2. 如果 进程[i] 是最后一个进程，跳到步骤 5.
+3. 当 活动进程列表 不为空，且 当前时间 + 活动进程[0]的剩余时间 <= 进程[i+1]的到达时间，  
+则 运行 活动进程[0] 直至结束，从 活动进程列表 删除 活动进程[0]，  
 并对 活动进程列表 按 响应比 降序排序
-4. 如果 活动进程列表 不为空，
-则 运行 活动进程[0] 直至 进程[i+1] 到达
+4. 如果 活动进程列表 不为空，  
+则 运行 活动进程[0] 直至 进程[i+1] 到达，  
 否则 处理器空闲，等待 进程[i+1] 到达
 5. 对 `i=0...count-1` 重复步骤 1.2.3.4.
-6. 对于 活动进程列表 中的每一个 进程， 
+6. 对于 活动进程列表 中的每一个 进程，  
 运行 进程 直至结束，对 活动进程列表 按 响应比 降序排序
 
 相关代码：
@@ -190,19 +190,16 @@
             if remain_time[act_proc[0]] <= ss:
                 clock += remain_time[act_proc[0]]
                 turna_time[act_proc[0]] = clock - at[act_proc[0]]
-                lg.debug('porc{i}_term_time = {c}'.format(i=act_proc.pop(0), c=clock))
+                act_proc.pop(0)
             else:
                 clock += ss
                 remain_time[act_proc[0]] -= ss
-                lg.debug('proc{i}_reamin_time = {t}'.format(i=act_proc[0], t=remain_time[act_proc[0]]))
                 act_proc.append(act_proc.pop(0))
         else:
             clock = at[i]
 
         while i < count and clock >= at[i]:
             act_proc.insert(0, i)
-            lg.debug('porc{i}_start_time = {c}'.format(i=i, c=clock))
-            lg.debug('act_proc = ' + act_proc.__str__())
             i += 1
 ```
 
@@ -228,11 +225,10 @@
                 clock += time_slice[lvl]
                 remain_time[cur_proc] -= time_slice[lvl]
                 time_slice[lvl] = 0
-                lg.debug('proc{i}_reamin_time = {t}'.format(i=cur_proc, t=remain_time[cur_proc]))
 
                 if remain_time[cur_proc] == 0:
                     turna_time[cur_proc] = clock - at[cur_proc]
-                    lg.debug('porc{i}_term_time = {c}'.format(i=proc_lists[lvl].pop(0), c=clock))
+                    proc_lists[lvl].pop(0)
                 else:
                     if lvl < ql - 1:
                         proc_lists[lvl+1].append(proc_lists[lvl].pop(0))
@@ -243,8 +239,6 @@
 
         while i < count and clock >= at[i]:
             proc_lists[0].insert(0, i)
-            lg.debug('porc{i}_start_time = {c}'.format(i=i, c=clock))
-            lg.debug('proc_lists = ' + proc_lists.__str__())
             i += 1
     
 ```

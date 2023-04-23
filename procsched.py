@@ -369,7 +369,7 @@ def draw_chart(res: dict, rt1: float, rt2: float):
         plt.text(x + 0.25, data['avg_resp_rate'][x] * rt1, '{:.2f}'.format(data['avg_resp_rate'][x]), ha='center')
         plt.text(x + 0.50, data['max_wait_time'][x] * rt2, '{:.0f}'.format(data['max_wait_time'][x]), ha='center')
 
-    plt.title('performence of process dispatch algorithm')
+    plt.title('performence of process scheduling algorithm')
     plt.xticks(xs + 0.25, names)
     plt.legend(loc='upper right')
     plt.show()
